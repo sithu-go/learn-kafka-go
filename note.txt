@@ -1,0 +1,6 @@
+DOcker volume in WSL
+from window terminal
+cd \\wsl$\docker-desktop-data\data\docker\volumes
+
+from ubuntu wsl
+cd /mnt/wsl/docker-desktop-data/data/docker/volumes
