@@ -37,7 +37,6 @@ func produce(msg string) {
 
 	if string(strings.ToUpper(msg)[0]) >= "N" {
 		partition = int32(1)
-		fmt.Println(partition)
 	}
 
 	message := &sarama.ProducerMessage{
@@ -48,6 +47,11 @@ func produce(msg string) {
 
 	// for number
 	// numberToSend := 42 // Replace with the number you want to send
+
+	// big-endian byte order
+	// Address:     0     1     2     3
+	// 			   ---------------------
+	// Value:      12    34    56    78
 
 	// var buf bytes.Buffer
 	// if err := binary.Write(&buf, binary.BigEndian, int32(numberToSend)); err != nil {

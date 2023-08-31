@@ -21,7 +21,7 @@ func main() {
 func consume() {
 	config := sarama.NewConfig()
 	config.ClientID = "myApp"
-	config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategyRoundRobin()}
+	// config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategyRoundRobin()}
 	config.Consumer.Group.Rebalance.Strategy = sarama.NewBalanceStrategyRoundRobin()
 	// config.Consumer.Group.Session.Timeout = 10 * time.Second   // Adjust as needed
 	// config.Consumer.Group.Heartbeat.Interval = 3 * time.Second // Adjust as needed
@@ -57,6 +57,7 @@ func consume() {
 				log.Printf("Error Consuming : %v", err)
 			}
 
+			// if cancel will go here
 			if ctx.Err() != nil {
 				return
 			}
@@ -83,10 +84,14 @@ func consume() {
 type Consumer struct {
 }
 
+// 1st go in here
 func (c *Consumer) Setup(sarama.ConsumerGroupSession) error { return nil }
 
+// 3rd go in here
+// after all ConsumeClaim goroutines have exited but before the offsets are committed for the very last time.
 func (c *Consumer) Cleanup(sarama.ConsumerGroupSession) error { return nil }
 
+// 2nd go in here
 func (c *Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	for message := range claim.Messages() {
 		fmt.Printf("Received message: %s at offset %d of partition %d\n", message.Value, message.Offset, message.Partition)

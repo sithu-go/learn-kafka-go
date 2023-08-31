@@ -46,3 +46,14 @@ func produce(msg string) {
 	fmt.Printf("parttion = %d, offset = %d \n", partition, offset)
 
 }
+
+// Bitwise test for
+// log.SetFlags(log.LstdFlags | log.Lshortfile)
+// func main() {
+// 	SetFlags(20 | 21)
+
+// }
+
+// func SetFlags(flag int) {
+// 	fmt.Println(flag)
+// }
