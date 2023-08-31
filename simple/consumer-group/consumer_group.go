@@ -21,13 +21,13 @@ func main() {
 func consume() {
 	config := sarama.NewConfig()
 	config.ClientID = "myApp"
-	// config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategyRoundRobin()}
-	config.Consumer.Group.Rebalance.Strategy = sarama.NewBalanceStrategyRoundRobin()
+	config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategyRoundRobin()}
+	// config.Consumer.Group.Rebalance.Strategy = sarama.NewBalanceStrategyRoundRobin()
 	// config.Consumer.Group.Session.Timeout = 10 * time.Second   // Adjust as needed
 	// config.Consumer.Group.Heartbeat.Interval = 3 * time.Second // Adjust as needed
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
 
-	brokers := []string{"localhost:9092"}
+	brokers := []string{"localhost:9991", "localhost:9992", "localhost:9993"}
 	groupID := "G1"
 	topics := []string{"Users"}
 

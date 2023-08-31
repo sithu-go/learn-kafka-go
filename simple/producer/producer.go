@@ -20,7 +20,7 @@ func produce(msg string) {
 	config.Producer.Return.Successes = true
 	config.Producer.Partitioner = sarama.NewManualPartitioner
 
-	brokers := []string{"localhost:9092"}
+	brokers := []string{"localhost:9991", "localhost:9992", "localhost:9993"}
 
 	producer, err := sarama.NewSyncProducer(brokers, config)
 	if err != nil {

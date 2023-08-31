@@ -11,8 +11,9 @@ func main() {
 	config := sarama.NewConfig()
 
 	config.ClientID = "myApp"
+	config.Version = sarama.V3_5_1_0
 
-	brokers := []string{"localhost:9092"}
+	brokers := []string{"localhost:9991", "localhost:9992", "localhost:9993"}
 
 	admin, err := sarama.NewClusterAdmin(brokers, config)
 	if err != nil {
@@ -26,23 +27,23 @@ func main() {
 	// sigchan := make(chan os.Signal, 1)
 	// signal.Notify(sigchan, os.Interrupt)
 
-	// Deleting Topic
-	if err := admin.DeleteTopic("Users"); err != nil {
-		log.Printf("Error deleting Topic: %v\n", err)
-	}
+	// // Deleting Topic
+	// if err := admin.DeleteTopic("Users"); err != nil {
+	// 	log.Printf("Error deleting Topic: %v\n", err)
+	// }
 
 	// Create Topic
-	topicDetail := &sarama.TopicDetail{
-		NumPartitions:     2,
-		ReplicationFactor: -1,
-	}
+	// topicDetail := &sarama.TopicDetail{
+	// 	NumPartitions:     2,
+	// 	ReplicationFactor: 3,
+	// }
 
-	// validateOnly
-	// determines whether the topic will actually be created or not.
-	//  If validateOnly is set to true, the request will be validated, but the topic will not be created.
-	if err := admin.CreateTopic("Users", topicDetail, false); err != nil {
-		log.Fatalf("Error creating topics: %v", err)
-	}
+	// // validateOnly
+	// // determines whether the topic will actually be created or not.
+	// //  If validateOnly is set to true, the request will be validated, but the topic will not be created.
+	// if err := admin.CreateTopic("Users", topicDetail, false); err != nil {
+	// 	log.Printf("Error creating topics: %v", err)
+	// }
 
 	// Listing Topics
 	topics, err := admin.ListTopics()
