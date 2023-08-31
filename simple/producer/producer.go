@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/IBM/sarama"
 )
@@ -17,6 +18,7 @@ func produce(msg string) {
 	config := sarama.NewConfig()
 	config.ClientID = "myApp"
 	config.Producer.Return.Successes = true
+	config.Producer.Partitioner = sarama.NewManualPartitioner
 
 	brokers := []string{"localhost:9092"}
 
@@ -33,10 +35,10 @@ func produce(msg string) {
 	// For string
 	partition := int32(0)
 
-	// if string(strings.ToUpper(msg)[0]) >= "N" {
-	// 	partition = int32(1)
-	// 	fmt.Println(partition)
-	// }
+	if string(strings.ToUpper(msg)[0]) >= "N" {
+		partition = int32(1)
+		fmt.Println(partition)
+	}
 
 	message := &sarama.ProducerMessage{
 		Topic:     "Users",
