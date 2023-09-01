@@ -16,9 +16,8 @@ import (
 )
 
 const (
-	ProducerPort       = ":8888"
-	KafkaServerAddress = "localhost:9092"
-	KafkaTopic         = "notifications"
+	ProducerPort = ":8888"
+	KafkaTopic   = "notifications"
 )
 
 var ErrUserNotFoundInProducer = errors.New("user not found")
@@ -30,6 +29,8 @@ var (
 		{ID: 3, Name: "Rick"},
 		{ID: 4, Name: "Lena"},
 	}
+
+	KafkaServerAddresses = []string{"localhost:9991", "localhost:9992", "localhost:9993"}
 
 	producer sarama.SyncProducer
 )
@@ -90,7 +91,7 @@ func sendKafkaMessage(message string, fromID, toID int) error {
 	}
 
 	partition, offset, err := producer.SendMessage(msg)
-	fmt.Printf("Partition = %v, Offset = %v", partition, offset)
+	fmt.Printf("Partition = %v, Offset = %v\n", partition, offset)
 	return err
 }
 
@@ -129,9 +130,12 @@ func sendMessageHandler() gin.HandlerFunc {
 
 func setupProducer() (sarama.SyncProducer, error) {
 	config := sarama.NewConfig()
+
+	// Ensures that the producer receives an acknowledgment
+	// once the message is successfully stored in the "notifications" topic
 	config.Producer.Return.Successes = true
 
-	producer, err := sarama.NewSyncProducer([]string{KafkaServerAddress}, config)
+	producer, err := sarama.NewSyncProducer(KafkaServerAddresses, config)
 	if err != nil {
 		return nil, fmt.Errorf("failed tp setup producer: %w", err)
 	}

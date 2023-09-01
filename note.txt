@@ -4,3 +4,8 @@ cd \\wsl$\docker-desktop-data\data\docker\volumes
 
 from ubuntu wsl
 cd /mnt/wsl/docker-desktop-data/data/docker/volumes
+
+
+Check kafka version
+cd /bin
+kafka-topics.sh --version

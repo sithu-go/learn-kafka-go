@@ -27,6 +27,7 @@ func consume() {
 	// config.Consumer.Group.Heartbeat.Interval = 3 * time.Second // Adjust as needed
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
 
+	// brokers := []string{"kafka-0:9092", "kafka-1:9092", "kafka-2:9092"}
 	brokers := []string{"localhost:9991", "localhost:9992", "localhost:9993"}
 	groupID := "G1"
 	topics := []string{"Users"}

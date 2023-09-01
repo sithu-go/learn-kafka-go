@@ -11,9 +11,13 @@ func main() {
 	config := sarama.NewConfig()
 
 	config.ClientID = "myApp"
-	config.Version = sarama.V3_5_1_0
+	// config.Version = sarama.V3_5_1_0
 
+	// brokers := []string{"127.0.0.1:9991", "127.0.0.1:9992", "127.0.0.1:9993"}
 	brokers := []string{"localhost:9991", "localhost:9992", "localhost:9993"}
+	// brokers := []string{"kafka-0:9991", "kafka-1:9992", "kafka-2:9993"}
+	//
+	// brokers := []string{"host.docker.internal:9991", "host.docker.internal:9992", "host.docker.internal:9993"}
 
 	admin, err := sarama.NewClusterAdmin(brokers, config)
 	if err != nil {
@@ -28,7 +32,7 @@ func main() {
 	// signal.Notify(sigchan, os.Interrupt)
 
 	// // Deleting Topic
-	// if err := admin.DeleteTopic("Users"); err != nil {
+	// if err := admin.DeleteTopic("notifications"); err != nil {
 	// 	log.Printf("Error deleting Topic: %v\n", err)
 	// }
 
