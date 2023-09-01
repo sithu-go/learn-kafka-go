@@ -9,3 +9,15 @@ cd /mnt/wsl/docker-desktop-data/data/docker/volumes
 Check kafka version
 cd /bin
 kafka-topics.sh --version
+
+// Sending notifications
+curl -X POST http://localhost:8888/send \
+-d "fromID=2&toID=1&message=Bruno started following you."
+
+curl -X POST http://localhost:8888/send \
+-d "fromID=1&toID=2&message=Emma mentioned you in a comment: 'Great seeing you yesterday, @Bruno!'"
+
+curl -X POST http://localhost:8888/send \
+-d "fromID=4&toID=1&message=Lena liked your post: 'My weekend getaway!'"
+
+curl http://localhost:8889/notifications/1

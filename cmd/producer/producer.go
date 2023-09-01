@@ -79,14 +79,14 @@ func sendKafkaMessage(message string, fromID, toID int) error {
 		return fmt.Errorf("failed to marsahl notification: %w", err)
 	}
 
-	var buf bytes.Buffer
-	if err := binary.Write(&buf, binary.BigEndian, int32(toID)); err != nil {
+	var keyBuf bytes.Buffer
+	if err := binary.Write(&keyBuf, binary.BigEndian, int32(toID)); err != nil {
 		return fmt.Errorf("failed to write value: %w", err)
 	}
 
 	msg := &sarama.ProducerMessage{
 		Topic: KafkaTopic,
-		Key:   sarama.ByteEncoder(buf.Bytes()),
+		Key:   sarama.ByteEncoder(keyBuf.Bytes()),
 		Value: sarama.ByteEncoder(notificationJSON),
 	}
 
